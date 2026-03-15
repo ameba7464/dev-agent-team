@@ -36,24 +36,26 @@ claude
 ## Workflow
 
 ```
-ТЗ (текст)
-    ↓
-  lead → создаёт plan.md и status.md
-    ↓
-system-designer → architecture.md, api-contracts.md, db-schema.md, component-tree.md
-    ↓              ↓
-backend-dev    frontend-dev   (параллельно)
-    ↓              ↓
-    └──── qa-engineer + bug-hunter (параллельно) ────┘
-                    ↓
-             final-summary.md
+agent-runtime/shared/brief.md   ← оператор заполняет перед запуском
+           ↓
+         lead → state/plan.md + state/status.md
+           ↓
+   system-designer → shared/architecture.md, api-contracts.md, db-schema.md, component-tree.md
+        ↓                        ↓
+  backend-dev              frontend-dev   (параллельно)
+        ↓                        ↓
+        └──── qa-engineer + bug-hunter (параллельно) ────┘
+                         ↓
+              outputs/final-summary.md
 ```
 
 ## Структура артефактов
 
 ```
 agent-runtime/
-├── shared/           ← артефакты между агентами
+├── shared/                 ← артефакты между агентами
+│   ├── brief.md            ← ВХОД: оператор заполняет (gitignored)
+│   ├── brief.template.md   ← шаблон brief (committed)
 │   ├── architecture.md
 │   ├── api-contracts.md
 │   ├── db-schema.md
@@ -62,9 +64,10 @@ agent-runtime/
 │   ├── frontend-done.md
 │   ├── review-report.md
 │   └── bugs-report.md
-├── messages/         ← handoff-сообщения между агентами
-├── state/            ← plan.md и status.md от lead
-└── outputs/          ← финальный код
+├── messages/               ← handoff-сообщения между агентами
+│   └── message-template.md ← формат сообщений (committed)
+├── state/                  ← plan.md и status.md от lead
+└── outputs/                ← финальный код
     ├── backend/
     ├── frontend/
     └── tests/
@@ -72,21 +75,22 @@ agent-runtime/
 
 ## Правила для всех агентов
 
-- Каждый handoff — явный файл в `agent-runtime/messages/`.
-- Код только в `agent-runtime/outputs/`.
-- Shared-артефакты только в `agent-runtime/shared/`.
-- Не начинать работу без получения handoff от предыдущего агента в цепочке.
+- Входная точка — `agent-runtime/shared/brief.md`. Не начинать без него.
+- Каждый handoff — явный файл в `agent-runtime/messages/` в формате из `message-template.md`.
+- Типы сообщений: `assignment`, `handoff`, `revision_request`, `approval`, `rejection`, `blocker`.
+- Код только в `agent-runtime/outputs/`. Shared-артефакты только в `agent-runtime/shared/`.
 - Не помечать задачу завершённой с незакрытыми critical-проблемами.
 
 ## Как использовать в новом проекте
 
 ```bash
 # Клонировать шаблон
-git clone https://github.com/<твой-репо>/dev-agent-team <название-проекта>
-cd <название-проекта>
+gh repo create my-project --template ameba7464/dev-agent-team --clone
+cd my-project
 
-# Очистить рабочие артефакты предыдущего прогона
-rm -rf agent-runtime/shared/* agent-runtime/messages/* agent-runtime/state/* agent-runtime/outputs/*
+# Заполнить brief
+cp agent-runtime/shared/brief.template.md agent-runtime/shared/brief.md
+# отредактировать brief.md
 
 # Запустить
 tmux new-session -s main
@@ -95,7 +99,7 @@ claude
 
 Затем дать lead-инструкцию:
 ```
-Прочитай ТЗ в файле task.md и запусти команду агентов.
+Прочитай brief в файле agent-runtime/shared/brief.md и запусти команду агентов.
 ```
 
 ---
@@ -153,8 +157,9 @@ Execute: agent-runtime/outputs/generate.py
 
 ## Правила взаимодействия агентов
 
-- Handoff-сообщения пишутся в `agent-runtime/messages/`
-- Имя файла: `from-<агент>-to-<агент>.md`
+- Handoff-сообщения пишутся в `agent-runtime/messages/`, имя: `from-<агент>-to-<агент>.md`
+- Формат каждого сообщения — из `agent-runtime/messages/message-template.md` (поля: id, from, to, type, topic, artifacts, needs, deadline, notes)
+- Типы: `assignment` | `handoff` | `revision_request` | `approval` | `rejection` | `blocker`
 - Shared-артефакты: `agent-runtime/shared/`
 - Финальные результаты: `agent-runtime/outputs/`
 

@@ -7,9 +7,11 @@ agent-runtime/outputs/frontend/*
 agent-runtime/outputs/tests/backend/*
 agent-runtime/outputs/tests/frontend/*
 
-# Сохраняем структуру директорий
+# Сохраняем структуру директорий и шаблоны
 !agent-runtime/shared/.gitkeep
+!agent-runtime/shared/brief.template.md
 !agent-runtime/messages/.gitkeep
+!agent-runtime/messages/message-template.md
 !agent-runtime/state/.gitkeep
 !agent-runtime/outputs/backend/.gitkeep
 !agent-runtime/outputs/frontend/.gitkeep

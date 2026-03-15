@@ -11,8 +11,8 @@
 ## Инструкции
 
 ```
-Читай: agent-runtime/messages/from-backend-dev-to-qa-engineer.md
-Читай: agent-runtime/messages/from-frontend-dev-to-qa-engineer.md
+Читай: agent-runtime/messages/from-backend-dev-to-qa-engineer.md   (type: handoff)
+Читай: agent-runtime/messages/from-frontend-dev-to-qa-engineer.md  (type: handoff)
 Читай: agent-runtime/outputs/backend/          — весь код backend
 Читай: agent-runtime/outputs/frontend/         — весь код frontend
 Читай: agent-runtime/shared/api-contracts.md
@@ -29,12 +29,12 @@
   - Разделение ответственности (бизнес-логика не в роутерах/компонентах)
   - Типизация без any
 
-Если найдены critical-замечания — отправь handoff разработчику:
-  agent-runtime/messages/from-qa-engineer-to-backend-dev.md
-  agent-runtime/messages/from-qa-engineer-to-frontend-dev.md
+Если найдены critical-замечания — отправь разработчику (формат — см. message-template.md):
+  agent-runtime/messages/from-qa-engineer-to-backend-dev.md   type: revision_request
+  agent-runtime/messages/from-qa-engineer-to-frontend-dev.md  type: revision_request
 
 Handoff lead после завершения:
-  agent-runtime/messages/from-qa-engineer-to-lead.md
+  agent-runtime/messages/from-qa-engineer-to-lead.md          type: approval (или rejection если есть критические незакрытые)
 ```
 
 ## Обязательные выходы

@@ -11,8 +11,8 @@
 ## Инструкции
 
 ```
-Читай: agent-runtime/messages/from-backend-dev-to-bug-hunter.md
-Читай: agent-runtime/messages/from-frontend-dev-to-bug-hunter.md
+Читай: agent-runtime/messages/from-backend-dev-to-bug-hunter.md   (type: handoff)
+Читай: agent-runtime/messages/from-frontend-dev-to-bug-hunter.md  (type: handoff)
 Читай: agent-runtime/outputs/backend/   — весь код backend
 Читай: agent-runtime/outputs/frontend/  — весь код frontend
 
@@ -37,12 +37,12 @@
   - Эксплойт: как это можно использовать
   - Исправление: конкретное предложение
 
-Если найдены critical-баги — также отправь handoff разработчику:
-  agent-runtime/messages/from-bug-hunter-to-backend-dev.md
-  agent-runtime/messages/from-bug-hunter-to-frontend-dev.md
+Если найдены critical-баги — отправь разработчику (формат — см. message-template.md):
+  agent-runtime/messages/from-bug-hunter-to-backend-dev.md   type: revision_request
+  agent-runtime/messages/from-bug-hunter-to-frontend-dev.md  type: revision_request
 
 Handoff lead после завершения:
-  agent-runtime/messages/from-bug-hunter-to-lead.md
+  agent-runtime/messages/from-bug-hunter-to-lead.md          type: approval (или rejection если есть незакрытые critical)
 ```
 
 ## Обязательные выходы

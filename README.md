@@ -1,6 +1,6 @@
 # dev-agent-team
 
-Claude Code Agent Teams template for full-stack development. Accepts a text spec and produces working code through 6 specialized agents with explicit handoffs and non-negotiable acceptance criteria.
+Claude Code Agent Teams template for full-stack development. Accepts a brief and produces working code through 6 specialized agents with explicit handoffs, structured messages, and revision loops.
 
 ## Prerequisites
 
@@ -17,20 +17,16 @@ gh repo create my-project --template ameba7464/dev-agent-team --clone
 cd my-project
 ```
 
-Or clone directly:
+### 2. Write the brief
 
 ```bash
-git clone https://github.com/ameba7464/dev-agent-team my-project
-cd my-project
+cp agent-runtime/shared/brief.template.md agent-runtime/shared/brief.md
+# Fill in brief.md — describe what you want to build
 ```
-
-### 2. Fill in the requirements
-
-Edit `task.md` — describe what you want to build.
 
 ### 3. (Optional) Override the tech stack
 
-Edit `stack.md` to use a different stack. Default: Python + FastAPI + PostgreSQL / React 18 + TypeScript + Tailwind CSS.
+Edit `stack.md`. Default: Python + FastAPI + PostgreSQL / React 18 + TypeScript + Tailwind CSS.
 
 ### 4. Run
 
@@ -42,7 +38,7 @@ claude
 
 Then tell `lead`:
 ```
-Прочитай ТЗ в файле task.md и запусти команду агентов.
+Прочитай brief в файле agent-runtime/shared/brief.md и запусти команду агентов.
 ```
 
 ### Reset between runs
@@ -56,35 +52,62 @@ Then tell `lead`:
 ## Agent pipeline
 
 ```
-task.md
-    ↓
-  lead          → agent-runtime/state/plan.md + status.md
-    ↓
-system-designer → shared/architecture.md + api-contracts.md + db-schema.md + component-tree.md
-    ↓                       ↓
-backend-dev           frontend-dev        (parallel)
-    ↓                       ↓
-    └──── qa-engineer + bug-hunter ────┘  (parallel)
-                    ↓
-         outputs/final-summary.md
+agent-runtime/shared/brief.md
+           ↓
+         lead          → state/plan.md + state/status.md
+           ↓
+   system-designer     → shared/architecture.md
+                          shared/api-contracts.md
+                          shared/db-schema.md
+                          shared/component-tree.md
+        ↓                        ↓
+  backend-dev              frontend-dev        (parallel)
+        ↓                        ↓
+        └──── qa-engineer + bug-hunter ────┘   (parallel)
+                         ↓
+              outputs/final-summary.md
 ```
 
 | Agent | Role | Starts when |
 |---|---|---|
-| `lead` | Coordinator, creates plan | Immediately after task |
-| `system-designer` | Architecture, API contracts, DB schema | After `lead` |
-| `backend-dev` | Python / FastAPI code | After `system-designer` |
-| `frontend-dev` | React / Tailwind code | After `system-designer`, parallel with `backend-dev` |
-| `qa-engineer` | Tests (pytest, Vitest) + code review | After `backend-dev` and `frontend-dev` |
-| `bug-hunter` | Security vulnerabilities (OWASP Top 10) | After `backend-dev` and `frontend-dev`, parallel with `qa-engineer` |
+| `lead` | Coordinator — reads brief, creates plan, orchestrates | Immediately |
+| `system-designer` | Architecture, API contracts, DB schema, component tree | After `lead` assignment |
+| `backend-dev` | Python / FastAPI code | After `system-designer` handoff |
+| `frontend-dev` | React / TypeScript / Tailwind code | After `system-designer` handoff, parallel with `backend-dev` |
+| `qa-engineer` | Tests (pytest + Vitest) + code review | After both devs complete |
+| `bug-hunter` | Security analysis — OWASP Top 10 | After both devs complete, parallel with `qa-engineer` |
 
 ---
 
-## Output structure
+## Infrastructure
+
+### Entry point
+
+Operator writes `agent-runtime/shared/brief.md` before each run. Template: `agent-runtime/shared/brief.template.md`.
+
+### Messages
+
+All inter-agent communication uses structured handoff files in `agent-runtime/messages/`:
+
+```
+from-lead-to-system-designer.md         type: assignment
+from-system-designer-to-backend-dev.md  type: handoff
+from-system-designer-to-frontend-dev.md type: handoff
+from-backend-dev-to-qa-engineer.md      type: handoff
+from-qa-engineer-to-backend-dev.md      type: revision_request  (if issues found)
+from-bug-hunter-to-lead.md              type: approval | rejection
+...
+```
+
+Format: see `agent-runtime/messages/message-template.md`
+
+### Artifact structure
 
 ```
 agent-runtime/
-├── shared/           ← artifacts shared between agents
+├── shared/           ← intermediate artifacts between agents
+│   ├── brief.md            ← operator fills this (gitignored)
+│   ├── brief.template.md   ← committed template
 │   ├── architecture.md
 │   ├── api-contracts.md
 │   ├── db-schema.md
@@ -94,6 +117,7 @@ agent-runtime/
 │   ├── review-report.md
 │   └── bugs-report.md
 ├── messages/         ← handoff files (from-<agent>-to-<agent>.md)
+│   └── message-template.md ← committed format reference
 ├── state/            ← plan.md and status.md from lead
 └── outputs/
     ├── backend/      ← FastAPI application code
@@ -107,8 +131,10 @@ agent-runtime/
 
 ## Design principles
 
-**One agent = one specialization.** Each agent does exactly one thing. The harness — explicit handoffs, material artifacts, non-negotiable acceptance criteria — is what makes the system work. A well-constrained weaker agent outperforms a capable agent in a weak harness.
+**Artifact-driven communication.** Actual work travels via files in `shared/` and `outputs/`. Intent and coordination travel via structured messages in `messages/`. This separation makes the system inspectable — any state is visible on disk.
 
-**Every handoff is a file.** No implied contracts. Agent B starts only after it reads the artifact produced by Agent A. All intermediate state is visible on disk.
+**Explicit revision loops.** `qa-engineer` and `bug-hunter` send `revision_request` messages directly to the responsible developer. `lead` tracks status in a table (agent / phase / status / blockers) and re-triggers work when needed.
 
-**Non-negotiable criteria.** Each agent has hard-stop rules — it cannot mark its task complete until all criteria are met. No soft "objectives" or "guidelines".
+**Non-negotiable acceptance criteria.** Each agent has hard-stop rules — it cannot mark its task complete until all criteria are met. No soft objectives.
+
+**One agent = one specialization.** The harness — explicit handoffs, material artifacts, structured messages — is what makes the system reliable. A well-constrained agent outperforms a more capable agent in a weak harness.

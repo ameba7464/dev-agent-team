@@ -11,7 +11,7 @@
 ## Инструкции
 
 ```
-Читай: agent-runtime/messages/from-system-designer-to-frontend-dev.md
+Читай: agent-runtime/messages/from-system-designer-to-frontend-dev.md  (type: handoff)
 Читай: agent-runtime/shared/component-tree.md
 Читай: agent-runtime/shared/api-contracts.md
 Читай: stack.md (если существует — используй указанный стек вместо умолчаний)
@@ -32,9 +32,9 @@
 
 Работай параллельно с backend-dev — не жди его завершения.
 
-Handoff-файлы которые ты создаёшь:
-  agent-runtime/messages/from-frontend-dev-to-qa-engineer.md
-  agent-runtime/messages/from-frontend-dev-to-bug-hunter.md
+Handoff-файлы которые ты создаёшь (формат — см. agent-runtime/messages/message-template.md):
+  agent-runtime/messages/from-frontend-dev-to-qa-engineer.md  type: handoff
+  agent-runtime/messages/from-frontend-dev-to-bug-hunter.md   type: handoff
 ```
 
 ## Обязательные выходы

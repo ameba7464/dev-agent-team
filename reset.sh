@@ -8,14 +8,14 @@ RUNTIME="$ROOT/agent-runtime"
 
 echo "Cleaning agent-runtime..."
 
-# Удаляем содержимое (файлы и вложенные папки), сохраняем .gitkeep
-find "$RUNTIME/shared"                  -mindepth 1 ! -name ".gitkeep" -delete
-find "$RUNTIME/messages"                -mindepth 1 ! -name ".gitkeep" -delete
-find "$RUNTIME/state"                   -mindepth 1 ! -name ".gitkeep" -delete
-find "$RUNTIME/outputs/backend"         -mindepth 1 ! -name ".gitkeep" -delete
-find "$RUNTIME/outputs/frontend"        -mindepth 1 ! -name ".gitkeep" -delete
-find "$RUNTIME/outputs/tests/backend"   -mindepth 1 ! -name ".gitkeep" -delete
-find "$RUNTIME/outputs/tests/frontend"  -mindepth 1 ! -name ".gitkeep" -delete
+# Удаляем содержимое (файлы и вложенные папки), сохраняем шаблоны и .gitkeep
+find "$RUNTIME/shared"    -mindepth 1 ! -name ".gitkeep" ! -name "brief.template.md" -delete
+find "$RUNTIME/messages"  -mindepth 1 ! -name ".gitkeep" ! -name "message-template.md" -delete
+find "$RUNTIME/state"     -mindepth 1 ! -name ".gitkeep" -delete
+find "$RUNTIME/outputs/backend"        -mindepth 1 ! -name ".gitkeep" -delete
+find "$RUNTIME/outputs/frontend"       -mindepth 1 ! -name ".gitkeep" -delete
+find "$RUNTIME/outputs/tests/backend"  -mindepth 1 ! -name ".gitkeep" -delete
+find "$RUNTIME/outputs/tests/frontend" -mindepth 1 ! -name ".gitkeep" -delete
 
 # Восстанавливаем директории на случай если были удалены
 mkdir -p \
@@ -40,6 +40,7 @@ touch \
 echo "Done. agent-runtime is clean and ready for a new run."
 echo ""
 echo "Next steps:"
-echo "  1. Fill in task.md with your requirements"
-echo "  2. (Optional) Create stack.md to override the default tech stack"
+echo "  1. Copy the brief template and fill it in:"
+echo "     cp agent-runtime/shared/brief.template.md agent-runtime/shared/brief.md"
+echo "  2. (Optional) Edit stack.md to override the default tech stack"
 echo "  3. Run: tmux new-session -s main && claude"

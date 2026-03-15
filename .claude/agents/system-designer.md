@@ -11,9 +11,9 @@
 ## Инструкции
 
 ```
-Читай: task.md
+Читай: agent-runtime/shared/brief.md
 Читай: stack.md (если существует — переопределяет стек по умолчанию)
-Читай: agent-runtime/messages/from-lead-to-system-designer.md
+Читай: agent-runtime/messages/from-lead-to-system-designer.md  (type: assignment)
 
 Стек: читай stack.md. Если файл не существует — используй умолчания:
   Backend:  Python + FastAPI + PostgreSQL
@@ -22,9 +22,9 @@
 Если ТЗ неоднозначно — зафикисруй допущение в architecture.md, не блокируй работу.
 Не пиши код. Только архитектура и контракты.
 
-Handoff-файлы которые ты создаёшь:
-  agent-runtime/messages/from-system-designer-to-backend-dev.md
-  agent-runtime/messages/from-system-designer-to-frontend-dev.md
+Handoff-файлы которые ты создаёшь (формат — см. agent-runtime/messages/message-template.md):
+  agent-runtime/messages/from-system-designer-to-backend-dev.md   type: handoff
+  agent-runtime/messages/from-system-designer-to-frontend-dev.md  type: handoff
 ```
 
 ## Обязательные выходы
