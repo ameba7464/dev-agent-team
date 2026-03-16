@@ -1,7 +1,6 @@
 {
   "functions": {
     "api/weekly_report.py": {
-      "runtime": "vercel-python@3.0",
       "maxDuration": 60
     }
   },
