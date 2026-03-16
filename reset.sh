@@ -12,6 +12,7 @@ echo "Cleaning agent-runtime..."
 find "$RUNTIME/shared"    -mindepth 1 ! -name ".gitkeep" ! -name "brief.template.md" -delete
 find "$RUNTIME/messages"  -mindepth 1 ! -name ".gitkeep" ! -name "message-template.md" -delete
 find "$RUNTIME/state"     -mindepth 1 ! -name ".gitkeep" -delete
+find "$RUNTIME/outputs" -maxdepth 1 -type f -delete
 find "$RUNTIME/outputs/backend"        -mindepth 1 ! -name ".gitkeep" -delete
 find "$RUNTIME/outputs/frontend"       -mindepth 1 ! -name ".gitkeep" -delete
 find "$RUNTIME/outputs/tests/backend"  -mindepth 1 ! -name ".gitkeep" -delete

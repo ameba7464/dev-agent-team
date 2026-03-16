@@ -2,10 +2,10 @@
 agent-runtime/shared/*
 agent-runtime/messages/*
 agent-runtime/state/*
-agent-runtime/outputs/backend/*
 agent-runtime/outputs/frontend/*
 agent-runtime/outputs/tests/backend/*
 agent-runtime/outputs/tests/frontend/*
+agent-runtime/outputs/final-summary.md
 
 # Сохраняем структуру директорий и шаблоны
 !agent-runtime/shared/.gitkeep
@@ -13,10 +13,17 @@ agent-runtime/outputs/tests/frontend/*
 !agent-runtime/messages/.gitkeep
 !agent-runtime/messages/message-template.md
 !agent-runtime/state/.gitkeep
-!agent-runtime/outputs/backend/.gitkeep
 !agent-runtime/outputs/frontend/.gitkeep
 !agent-runtime/outputs/tests/backend/.gitkeep
 !agent-runtime/outputs/tests/frontend/.gitkeep
+
+# Секреты и данные
+*.json
+!package.json
+!package-lock.json
+!tsconfig*.json
+!vercel.json
+*.csv
 
 # Конфиг с локальными разрешениями (содержит персональные токены/пути)
 .claude/settings.local.json

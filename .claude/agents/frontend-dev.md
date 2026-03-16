@@ -11,6 +11,7 @@
 ## Инструкции
 
 ```
+Читай: agent-runtime/messages/from-lead-to-frontend-dev.md             (type: assignment)
 Читай: agent-runtime/messages/from-system-designer-to-frontend-dev.md  (type: handoff)
 Читай: agent-runtime/shared/component-tree.md
 Читай: agent-runtime/shared/api-contracts.md
@@ -31,6 +32,10 @@
   - Никаких захардкоженных URL API — только process.env
 
 Работай параллельно с backend-dev — не жди его завершения.
+
+Если существуют revision_request-сообщения — прочитай их, исправь все critical-замечания, обнови код и повтори handoff:
+  agent-runtime/messages/from-qa-engineer-to-frontend-dev.md  (type: revision_request)
+  agent-runtime/messages/from-bug-hunter-to-frontend-dev.md   (type: revision_request)
 
 Handoff-файлы которые ты создаёшь (формат — см. agent-runtime/messages/message-template.md):
   agent-runtime/messages/from-frontend-dev-to-qa-engineer.md  type: handoff

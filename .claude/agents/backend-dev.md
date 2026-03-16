@@ -11,6 +11,7 @@
 ## Инструкции
 
 ```
+Читай: agent-runtime/messages/from-lead-to-backend-dev.md              (type: assignment)
 Читай: agent-runtime/messages/from-system-designer-to-backend-dev.md   (type: handoff)
 Читай: agent-runtime/shared/api-contracts.md
 Читай: agent-runtime/shared/db-schema.md
@@ -27,6 +28,10 @@
   - Никаких захардкоженных credentials
   - Обработка ошибок через HTTPException с понятными сообщениями
   - Все ответы — типизированные Pydantic-схемы
+
+Если существуют revision_request-сообщения — прочитай их, исправь все critical-замечания, обнови код и повтори handoff:
+  agent-runtime/messages/from-qa-engineer-to-backend-dev.md   (type: revision_request)
+  agent-runtime/messages/from-bug-hunter-to-backend-dev.md    (type: revision_request)
 
 Handoff-файлы которые ты создаёшь (формат — см. agent-runtime/messages/message-template.md):
   agent-runtime/messages/from-backend-dev-to-qa-engineer.md  type: handoff

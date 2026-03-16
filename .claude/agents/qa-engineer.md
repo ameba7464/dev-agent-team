@@ -11,6 +11,7 @@
 ## Инструкции
 
 ```
+Читай: agent-runtime/messages/from-lead-to-qa-engineer.md          (type: assignment)
 Читай: agent-runtime/messages/from-backend-dev-to-qa-engineer.md   (type: handoff)
 Читай: agent-runtime/messages/from-frontend-dev-to-qa-engineer.md  (type: handoff)
 Читай: agent-runtime/outputs/backend/          — весь код backend
@@ -48,4 +49,5 @@ Handoff lead после завершения:
 - `review-report.md` должен содержать замечания, разделённые по уровням: critical / warning / suggestion.
 - Каждое critical-замечание должно содержать: файл, строку, описание проблемы и предложение исправления.
 - `agent-runtime/outputs/tests/backend/` должен содержать тесты для каждого эндпоинта из `api-contracts.md`.
+- `agent-runtime/outputs/tests/frontend/` должен содержать тесты для каждой страницы (page) из `component-tree.md`.
 - Ревью не может быть помечено завершённым, если в `review-report.md` есть хотя бы одно critical-замечание без handoff разработчику.

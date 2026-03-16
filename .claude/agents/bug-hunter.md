@@ -11,6 +11,7 @@
 ## Инструкции
 
 ```
+Читай: agent-runtime/messages/from-lead-to-bug-hunter.md          (type: assignment)
 Читай: agent-runtime/messages/from-backend-dev-to-bug-hunter.md   (type: handoff)
 Читай: agent-runtime/messages/from-frontend-dev-to-bug-hunter.md  (type: handoff)
 Читай: agent-runtime/outputs/backend/   — весь код backend
@@ -53,4 +54,5 @@ Handoff lead после завершения:
 
 - `bugs-report.md` должен содержать результат проверки каждого пункта чеклиста (даже если проблем не найдено).
 - Каждый баг должен содержать точное указание файла и строки — не абстрактные описания.
-- Каждый critical и high баг должен содержать конкретное предложение исправления.
+- Каждый critical и high баг должен содержать описание эксплойта и конкретное предложение исправления.
+- Работа не может быть помечена завершённой, если в `bugs-report.md` есть хотя бы один critical-баг без отправленного revision_request разработчику.

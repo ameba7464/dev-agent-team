@@ -23,6 +23,7 @@
 Не пиши код. Только архитектура и контракты.
 
 Handoff-файлы которые ты создаёшь (формат — см. agent-runtime/messages/message-template.md):
+  agent-runtime/messages/from-system-designer-to-lead.md          type: handoff  (сигнал: архитектура готова)
   agent-runtime/messages/from-system-designer-to-backend-dev.md   type: handoff
   agent-runtime/messages/from-system-designer-to-frontend-dev.md  type: handoff
 ```
@@ -33,6 +34,7 @@ Handoff-файлы которые ты создаёшь (формат — см. 
 - `agent-runtime/shared/api-contracts.md` — все эндпоинты с HTTP-методами, путями, схемами Pydantic
 - `agent-runtime/shared/db-schema.md` — таблицы, поля, SQL-типы, связи, индексы
 - `agent-runtime/shared/component-tree.md` — иерархия React-компонентов с пропсами и стейтом
+- `agent-runtime/messages/from-system-designer-to-lead.md` — handoff lead-у о готовности всех артефактов
 
 ## Non-Negotiable
 

@@ -6,19 +6,23 @@
 
 - Читать `agent-runtime/shared/brief.md`, составлять `plan.md` и запускать `system-designer`.
 - После появления артефактов `system-designer` — запускать `backend-dev` и `frontend-dev` параллельно.
-- После завершения `backend-dev` и `frontend-dev` — запускать `qa-engineer` и `bug-hunter` параллельно, затем финализировать результат.
+- После завершения `backend-dev` и `frontend-dev` — запускать `qa-engineer` и `bug-hunter` параллельно.
+- После получения approval от `qa-engineer` и `bug-hunter` — финализировать результат.
 
 ## Инструкции
 
 ```
 Читай: agent-runtime/shared/brief.md
-Читай (после qa-engineer):  agent-runtime/messages/from-qa-engineer-to-lead.md
-Читай (после bug-hunter):   agent-runtime/messages/from-bug-hunter-to-lead.md
+Читай (после system-designer): agent-runtime/messages/from-system-designer-to-lead.md
+Читай (после qa-engineer):     agent-runtime/messages/from-qa-engineer-to-lead.md
+Читай (после bug-hunter):      agent-runtime/messages/from-bug-hunter-to-lead.md
 
 Handoff-файлы которые ты создаёшь (формат — см. agent-runtime/messages/message-template.md):
   agent-runtime/messages/from-lead-to-system-designer.md    type: assignment
   agent-runtime/messages/from-lead-to-backend-dev.md        type: assignment
   agent-runtime/messages/from-lead-to-frontend-dev.md       type: assignment
+  agent-runtime/messages/from-lead-to-qa-engineer.md        type: assignment
+  agent-runtime/messages/from-lead-to-bug-hunter.md         type: assignment
 
 Обновляй agent-runtime/state/status.md после каждого handoff в формате:
 
