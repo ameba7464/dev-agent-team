@@ -36,7 +36,7 @@ class WBClient:
 
     def __init__(self, token: str) -> None:
         self._token = token
-        self._headers = {"Authorization": token}
+        self._headers = {"Authorization": f"Bearer {token}"}
 
     # ------------------------------------------------------------------
     # Internal helpers
